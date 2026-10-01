@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Graduation! 🎓✨</title>
+    
+    <!-- ฟอนต์ Prompt -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- สคริปต์ยิงพลุกระดาษ -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Prompt", sans-serif;
+        }
+
+        body {
+            background: #fdfbf7;
+            color: #2b2d42;
+            min-height: 100vh;
+            min-height: 100svh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 15px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+        }
+
+        .card {
+            background: #ffffff;
+            padding: 35px 22px;
+            border-radius: 28px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+            display: none; /* ซ่อนทุกหน้าไว้ก่อน */
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .card.active {
+            display: block; /* แสดงเฉพาะหน้าที่เลือก */
+        }
+
+        .cap {
+            font-size: 55px;
+            margin-bottom: 15px;
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        .small-text {
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: #8d99ae;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        h1, h2 {
+            font-size: 26px;
+            font-weight: 600;
+            color: #2b2d42;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 13px;
+            letter-spacing: 2px;
+            color: #d4a373;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .line {
+            width: 40px;
+            height: 2px;
+            background: #e9ecef;
+            margin: 20px auto;
+            border-radius: 2px;
+        }
+
+        .message {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #4a5568;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .letter-text {
+            text-align: left;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #4a5568;
+            background: #fdfbf7;
+            padding: 18px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            white-space: pre-line;
+        }
+
+        /* ตารางกริดใส่รูปภาพความทรงจำ */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .photo-grid img {
+            width: 100%;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 14px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        /* กรอบรูปสลีปโอนเงิน / รูปเดี่ยว */
+        .single-photo {
+            width: 100%;
+            border-radius: 18px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            background: #f8f9fa;
+        }
+
+        .single-photo img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* ปุ่มกด */
+        .btn {
+            border: none;
+            outline: none;
+            width: 100%;
+            padding: 15px 20px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #2b2d42 0%, #4a4e69 100%);
+            color: white;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(43, 45, 66, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .btn:active {
+            transform: scale(0.96);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #e76f51 0%, #f4a261 100%);
+            box-shadow: 0 6px 18px rgba(231, 111, 81, 0.25);
+        }
+
+        .btn-party {
+            background: linear-gradient(135deg, #2a9d8f 0%, #e9c46a 100%);
+            box-shadow: 0 6px 18px rgba(42, 157, 143, 0.25);
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- ================= หน้าที่ 1: หน้าปก (Cover) ================= -->
+        <div class="card active" id="page1">
+            <div class="cap">🎓</div>
+            <div class="small-text">Congratulations To Puthip</div>
+            <h1>ยินดีด้วยนะคนเก่ง</h1>
+            <div class="subtitle">GRADUATION DAY</div>
+            <div class="line"></div>
+            <p class="message">
+                ภูธิปเก่งมากกก ภูมิใจในตัวเธอค่ะ 
+                <br>
+                มีของขวัญจะให้ เค้าตั้งใจทำให้เลยนะ ❤️
+            </p>
+            <button class="btn" onclick="nextPage(2)">เปิดการ์ดเลยคั้บสุดหล่อ ✨</button>
+        </div>
+
+        <!-- ================= หน้าที่ 2: ความทรงจำ 4 ปี + คำอวยพร ================= -->
+        <div class="card" id="page2">
+            <div class="small-text">Our 4 Years Journey</div>
+            <h2>4 ปีกว่าที่อยู่ด้วยกันมา(มั้ง) ❤️</h2>
+            <div class="line"></div>
+
+            <div class="photo-grid">
+                <img src="photo1.jpg" alt="รูปคู่ 1" onerror="this.src='https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=400'">
+                <img src="photo2.jpg" alt="รูปคู่ 2" onerror="this.src='https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=400'">
+                <img src="photo3.jpg" alt="รูปคู่ 3" onerror="this.src='https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=400'">
+                <img src="photo4.jpg" alt="รูปคู่ 4" onerror="this.src='https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=400'">
+            </div>
+
+            <div class="letter-text">
+    			<strong>Congratulations ka teeruk! 🎓✨</strong>
+    			รับปริญญาแล้วน้าาา ไม่รู้จะให้อะไรดี เค้าตั้งใจเขียนเว็บนี้ให้เธอเลยนะ ❤️
+    			ภูมิใจในตัวเธอมากๆ คั้บ... เค้าไม่รู้นะว่าความสัมพันธ์ของเราเธอจะยังรู้สึกเหมือนเดิมมั้ย แต่ดีใจด้วยนะ ดีใจที่ได้อยู่ในวันสำคัญวันนี้ของเธอด้วย
+    			เรื่องราวที่ผ่านมามันอาจจะลืมไม่ได้ แต่ก็ไม่จำให้มันรกสมองแล้วกัน ไม่รู้ว่าอนาคตข้างหน้าจะเป็นยังไง แต่เค้าก็ดีใจนะที่มีเธอ
+    			เติบโตขึ้นอีกขั้นแล้ว จะทำอะไรก็ขอให้มีสตินะคะ ขอให้ทุกๆ วันของเธอเป็นวันที่ดี
+
+    			<strong>รักเธอ ❤️</strong>
+			</div>
+
+            <button class="btn btn-gold" onclick="nextPage(3)">มีของขวัญให้ด้วย! 🎁</button>
+        </div>
+
+        <!-- ================= หน้าที่ 3: เซอร์ไพรส์โอนเงิน + สลีป ================= -->
+        <div class="card" id="page3">
+            <div class="small-text">Special Reward</div>
+            <h2>รางวัลสำหรับคนเรียนจบค่ะ 💸</h2>
+            <div class="subtitle">GRADUATION GIFT</div>
+            <div class="line"></div>
+
+            <p class="message">
+                คนเรียนจบต้องมีรางวัลให้ค้าบบบ! <br>
+                เค้าให้ **Gift Voucher มูลค่า 500 บาท** ให้เป็นของขวัญเรียนจบค้าบบ 5555555 <br>
+                ดูจบแล้วบอกเดี๋ยวโอนให้นะค้าบบบ 🤍
+            </p>
+
+            <button class="btn btn-gold" onclick="nextPage(4)">ไปหน้าสุดท้ายกันต่อ ➔</button>
+        </div>
+
+        <!-- ================= หน้าที่ 4: คำอวยพรปิดท้าย + ชวนกินหมูกระทะ ================= -->
+        <div class="card" id="page4">
+
+            <div id="page4-content">
+                <div class="cap">🥓🔥</div>
+                <div class="small-text">The End & Next Step</div>
+                <h2>วันของคนเก่ง!</h2>
+                <div class="line"></div>
+
+                <div class="letter-text" style="text-align: center;">
+                    หลังจากนี้ขอให้ชีวิตการทำงานเจอแต่เรื่องดีๆ เจอกัลยาณมิตรที่ดี ไม่ว่าเจอเรื่องยากแค่ไหน จำไว้นะว่ายังมีเค้าคอยซัพพอร์ตอยู่ตรงนี้เสมอ 🥰
+                    <br><br>
+                    <strong>แต่... มีของขวัญให้อีก 1 อย่าง</strong><br>
+                    ไปกินหมูกระทะกันค่ะที่รักกก เค้าเลี้ยงเอง! 🍻
+					(จะกินวันนี้ หรือเอาไว้วันที่เธอว่างก็ได้นะ)
+                </div>
+
+                <button class="btn btn-party" onclick="celebrate()">เย้! ไปกินหมูกระทะกันเลย 🥳</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function nextPage(pageNumber) {
+            // ซ่อนทุกหน้า
+            document.querySelectorAll('.card').forEach(card => {
+                card.classList.remove('active');
+            });
+
+            // แสดงหน้าที่เลือก
+            const targetPage = document.getElementById('page' + pageNumber);
+            targetPage.classList.add('active');
+
+            // ยิงพลุกระดาษเพิ่มความตื่นเต้นในหน้าที่ 3 และ 4
+            if (pageNumber === 3 || pageNumber === 4) {
+                confetti({
+                    particleCount: 80,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            }
+
+            // เลื่อนหน้าจอขึ้นไปด้านบนสุด
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function celebrate() {
+            // 1. ยิงพลุกระดาษจัดเต็มชุดใหญ่
+            var duration = 3 * 1000;
+            var end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 5,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 }
+                });
+                confetti({
+                    particleCount: 5,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 }
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            })();
+
+            // 2. เปลี่ยนเนื้อหาในหน้า 4 ให้แสดงรูปคู่ขนาดใหญ่
+            const container = document.getElementById('page4-content');
+            container.innerHTML = `
+                <div class="cap">👩‍❤️‍👨✨</div>
+                <div class="small-text">Let's Celebrate Together!</div>
+                <h2>I Love You Babe! 🥓🍻</h2>
+                <div class="line"></div>
+                <div class="single-photo">
+                    <img src="final_photo.jpg" alt="รูปคู่ฉลองกินหมูกระทะ" onerror="this.src='https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=600'">
+                </div>
+                <p class="message">
+                    Anniversary 4 Y 1 M ย้อนหลังค่ะ! ❤️
+                </p>
+            `;
+        }
+    </script>
+</body>
+</html>
